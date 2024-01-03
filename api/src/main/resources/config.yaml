@@ -12,3 +12,11 @@ kumuluzee:
       connection-url: jdbc:postgresql://localhost:5432/expenses
       username: dbuser
       password: postgres
+  health:
+    checks:
+      #data-source-health-check:
+      #  type: liveness
+      #  jndi-name: jdbc/ImageMetadataDS
+      disk-space-health-check:
+        threshold: 100000000
+        type: liveness
