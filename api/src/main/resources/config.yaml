@@ -20,3 +20,7 @@ kumuluzee:
       disk-space-health-check:
         threshold: 100000000
         type: liveness
+  metrics:
+    web-instrumentation:
+      - name: expenses-endpoint
+        url-pattern: /v1/expenses/*

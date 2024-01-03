@@ -13,6 +13,11 @@ import java.util.stream.Collectors;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 
+import org.eclipse.microprofile.metrics.annotation.*;
+import org.eclipse.microprofile.metrics.Counter;
+import org.eclipse.microprofile.metrics.Histogram;
+//import org.eclipse.microprofile.metrics.Meter;
+
 import si.fri.rso.samples.imagecatalog.lib.Expenses;
 import si.fri.rso.samples.imagecatalog.models.converters.ExpensesConverter;
 import si.fri.rso.samples.imagecatalog.models.entities.ExpensesEntity;
@@ -26,6 +31,8 @@ public class ExpensesBean {
     @Inject
     private EntityManager em;
 
+    @Timed
+    @Counted(name = "simple_counter")
     public List<Expenses> getExpenses() {
 
         TypedQuery<ExpensesEntity> query = em.createNamedQuery(
@@ -46,6 +53,9 @@ public class ExpensesBean {
                 .map(ExpensesConverter::toDto).collect(Collectors.toList());
     }
 
+    @Inject
+    @Metric(name = "simple_histogram")
+    Histogram histogram;
     public Expenses getExpenses(Integer id) {
 
         ExpensesEntity ExpensesEntity = em.find(ExpensesEntity.class, id);
@@ -53,6 +63,8 @@ public class ExpensesBean {
         if (ExpensesEntity == null) {
             throw new NotFoundException();
         }
+
+        histogram.update(id);
 
         Expenses expenses = ExpensesConverter.toDto(ExpensesEntity);
 
