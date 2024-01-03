@@ -22,7 +22,8 @@ spec:
             - name: KUMULUZEE_DATASOURCES0_USERNAME
               value: dbuser
             - name: KUMULUZEE_DATASOURCES0_PASSWORD
-              value: password
+              value: postgres
+              #value: password
           ports:
             - containerPort: 8081
               name: server
