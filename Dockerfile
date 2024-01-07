@@ -6,7 +6,7 @@ WORKDIR /app
 
 ADD ./api/target/expenses-api-1.0.0-SNAPSHOT.jar /app
 
-EXPOSE 8081
+EXPOSE 8080
 
 CMD ["java", "-jar", "expenses-api-1.0.0-SNAPSHOT.jar"]
 #ENTRYPOINT ["java", "-jar", "expenses-api-1.0.0-SNAPSHOT.jar"]
