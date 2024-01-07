@@ -9,6 +9,7 @@ public class Expenses {
     private String kind;
     private Date date_occurrence;
     private String description;
+    private Integer price;
 
     public String getKind() {
         return kind;
@@ -40,5 +41,13 @@ public class Expenses {
 
     public void setExpenseId(Integer expenseId) {
         this.expenseId = expenseId;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }
