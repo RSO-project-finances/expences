@@ -30,6 +30,7 @@
         <kumuluzee-graphql.version>1.1.0</kumuluzee-graphql.version>
         <kumuluzee-health.version>2.4.4</kumuluzee-health.version>
         <kumuluzee-metrics.version>3.0.0</kumuluzee-metrics.version>
+        <kumuluzee-logs.version>1.4.6</kumuluzee-logs.version>
     </properties>
 
     <dependencyManagement>
@@ -95,6 +96,12 @@
                 <groupId>com.kumuluz.ee.metrics</groupId>
                 <artifactId>kumuluzee-metrics-core</artifactId>
                 <version>${kumuluzee-metrics.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>kumuluzee-logs-log4j2</artifactId>
+                <groupId>com.kumuluz.ee.logs</groupId>
+                <version>${kumuluzee-logs.version}</version>
             </dependency>
 
             <dependency>
