@@ -46,11 +46,11 @@ public class ExpensesEntity {
         this.kind = kind;
     }
 
-    public Date getDateoccurrence() {
+    public Date getDate_occurrence() {
         return date_occurrence;
     }
 
-    public void setDateoccurrence(Date date_occurrence) {
+    public void setDate_occurrence(Date date_occurrence) {
         this.date_occurrence = date_occurrence;
     }
 

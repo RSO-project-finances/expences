@@ -10,7 +10,7 @@ public class ExpensesConverter {
         Expenses dto = new Expenses();
         dto.setExpenseId(entity.getExpenseId());
         dto.setKind(entity.getKind());
-        dto.setDateOccurrence(entity.getDateoccurrence());
+        dto.setDate_occurrence(entity.getDate_occurrence());
         dto.setDescription(entity.getDescription());
         dto.setPrice(entity.getPrice());
 
@@ -23,7 +23,7 @@ public class ExpensesConverter {
         ExpensesEntity entity = new ExpensesEntity();
         entity.setExpenseId(dto.getExpenseId());
         entity.setKind(dto.getKind());
-        entity.setDateoccurrence(dto.getDateOccurrence());
+        entity.setDate_occurrence(dto.getDate_occurrence());
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
 

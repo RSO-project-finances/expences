@@ -10,6 +10,7 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.json.JSONArray;
 import si.fri.rso.samples.imagecatalog.lib.Expenses;
 import si.fri.rso.samples.imagecatalog.services.beans.ExpensesBean;
 
@@ -22,6 +23,13 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.logging.Logger;
+
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpClient;
+import java.io.IOException;
+import org.json.JSONObject;
 
 
 
@@ -91,14 +99,60 @@ public class ExpensesResource {
             required = true, content = @Content(
             schema = @Schema(implementation = Expenses.class))) Expenses expense) {
 
-        if ((expense.getKind() == null || expense.getDescription() == null || expense.getDateOccurrence() == null)) {
+        log.info(expense.toString());
+
+        if ((expense.getKind() == null || expense.getDescription() == null || expense.getDate_occurrence() == null)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         else {
-            expense = expensesBean.createExpense(expense);
+            String text = expense.getKind();
+
+            /*HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://grammar-and-spellcheck.p.rapidapi.com/grammarandspellcheck"))
+                    .header("content-type", "application/x-www-form-urlencoded")
+                    .header("X-RapidAPI-Key", "my-key")
+                    .header("X-RapidAPI-Host", "grammar-and-spellcheck.p.rapidapi.com")
+                    .method("POST",
+                            HttpRequest.BodyPublishers.ofString("query=" + text))
+                    .build();*/
+
+            //HttpResponse<String> response = null;
+            try {
+                /*response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+                System.out.println(response);
+                System.out.println(response.statusCode());
+                System.out.println(response.headers());
+                System.out.println(response.body());*/
+
+                JSONObject json = new JSONObject("{\"identified_mistakes\":[]}");
+                /*JSONObject json = new JSONObject("{\"identified_mistakes\":[\n" +
+                        "  {\"category\":\"TYPOS\",\n" +
+                        "  \"context\":\"Hep me please\",\n" +
+                        "  \"errorLength\":3,\n" +
+                        "  \"message\":\"Did you mean \\u201cHelp\\u201d or \\u201cHip\\u201d (\\u201chep\\u201d is old-fashioned for \\u201chip\\u201d)?\",\n" +
+                        "  \"offset\":0,\n" +
+                        "  \"offsetInContext\":0,\n" +
+                        "  \"replacements\":[\"Help\",\"Hip\"],\n" +
+                        "  \"ruleId\":\"HEP\",\n" +
+                        "  \"ruleIssueType\":\"misspelling\",\n" +
+                        "  \"sentence\":\"Hep me please\"}]}");*/
+                JSONArray ja = json.getJSONArray("identified_mistakes");
+                log.info(String.valueOf(ja.length()));
+
+                // OK
+                if (ja.isEmpty()) {
+                    expense = expensesBean.createExpense(expense);
+                    return Response.status(Response.Status.ACCEPTED).entity(expense).build();
+                } else {
+                    return Response.status(Response.Status.NOT_ACCEPTABLE).entity("misspelling").build();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        return Response.status(Response.Status.CONFLICT).entity(expense).build();
+        return Response.status(Response.Status.CONFLICT).entity("error").build();
 
     }
 

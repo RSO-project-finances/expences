@@ -31,6 +31,7 @@
         <kumuluzee-health.version>2.4.4</kumuluzee-health.version>
         <kumuluzee-metrics.version>3.0.0</kumuluzee-metrics.version>
         <kumuluzee-logs.version>1.4.6</kumuluzee-logs.version>
+        <org.json.version>20231013</org.json.version>
     </properties>
 
     <dependencyManagement>
@@ -102,6 +103,12 @@
                 <artifactId>kumuluzee-logs-log4j2</artifactId>
                 <groupId>com.kumuluz.ee.logs</groupId>
                 <version>${kumuluzee-logs.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${org.json.version}</version>
             </dependency>
 
             <dependency>
