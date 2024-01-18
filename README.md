@@ -4,7 +4,8 @@
 ```bash
 mvn clean package
 docker build -t expenses .   
-docker tag expenses tomaz12345/expenses   
+docker tag expenses tomaz12345/expenses
+docker push tomaz12345/expenses
 docker network ls  
 docker network rm rso
 docker network create rso
@@ -68,14 +69,22 @@ kubectl --namespace default scale deployment expenses-deployment --replicas 0
 kubectl logs expenses-deployment----
 ```
 ```bash
-kubectl delete deployment expenses-deployment
-kubectl delete service expenses
+kubectl apply -f .\expences\k8s\expenses-deployment.yaml
+kubectl apply -f .\statistics\k8s\dep.yaml
+kubectl apply -f .\expences\k8s\ingress.yaml
 ```
 ```bash
-kubectl delete pod expenses-deployment
+kubectl delete --all deployments
+kubectl delete --all pods
+kubectl delete --all services
+kubectl delete --all ingress
 ```
+
 ```bash
 kubectl create secret generic pg-pass --from-literal=password=mypassword
 kubectl get secrets
 kubectl describe secret pg-pass
+```
+```bash
+kubectl get service expenses --watch
 ```

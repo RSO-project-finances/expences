@@ -22,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import java.net.URI;
@@ -59,6 +60,8 @@ public class ExpensesResource {
     @GET
     public Response getExpenses() {
 
+        log.log(Level.INFO, "get expenses");
+
         List<Expenses> expense = expensesBean.getExpensesFilter(uriInfo);
 
         return Response.status(Response.Status.OK).entity(expense).build();
@@ -77,6 +80,7 @@ public class ExpensesResource {
     public Response getExpenses(@Parameter(description = "Expense ID.", required = true)
                                      @PathParam("expenseId") Integer expenseId) {
 
+        log.log(Level.INFO, "get expense " + expenseId);
         Expenses expenses = expensesBean.getExpenses(expenseId);
 
         if (expenses == null) {
@@ -99,7 +103,7 @@ public class ExpensesResource {
             required = true, content = @Content(
             schema = @Schema(implementation = Expenses.class))) Expenses expense) {
 
-        log.info(expense.toString());
+        log.log(Level.INFO, "add expense");
 
         if ((expense.getKind() == null || expense.getDescription() == null || expense.getDate_occurrence() == null)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -107,37 +111,24 @@ public class ExpensesResource {
         else {
             String text = expense.getKind();
 
-            /*HttpRequest request = HttpRequest.newBuilder()
+            HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://grammar-and-spellcheck.p.rapidapi.com/grammarandspellcheck"))
                     .header("content-type", "application/x-www-form-urlencoded")
                     .header("X-RapidAPI-Key", "my-key")
                     .header("X-RapidAPI-Host", "grammar-and-spellcheck.p.rapidapi.com")
                     .method("POST",
                             HttpRequest.BodyPublishers.ofString("query=" + text))
-                    .build();*/
+                    .build();
 
-            //HttpResponse<String> response = null;
+            HttpResponse<String> response = null;
             try {
-                /*response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-                System.out.println(response);
-                System.out.println(response.statusCode());
-                System.out.println(response.headers());
-                System.out.println(response.body());*/
+                response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+                JSONObject json = new JSONObject(response.body());
 
-                JSONObject json = new JSONObject("{\"identified_mistakes\":[]}");
-                /*JSONObject json = new JSONObject("{\"identified_mistakes\":[\n" +
-                        "  {\"category\":\"TYPOS\",\n" +
-                        "  \"context\":\"Hep me please\",\n" +
-                        "  \"errorLength\":3,\n" +
-                        "  \"message\":\"Did you mean \\u201cHelp\\u201d or \\u201cHip\\u201d (\\u201chep\\u201d is old-fashioned for \\u201chip\\u201d)?\",\n" +
-                        "  \"offset\":0,\n" +
-                        "  \"offsetInContext\":0,\n" +
-                        "  \"replacements\":[\"Help\",\"Hip\"],\n" +
-                        "  \"ruleId\":\"HEP\",\n" +
-                        "  \"ruleIssueType\":\"misspelling\",\n" +
-                        "  \"sentence\":\"Hep me please\"}]}");*/
+                //JSONObject json = new JSONObject("{\"identified_mistakes\":[]}");
+
                 JSONArray ja = json.getJSONArray("identified_mistakes");
-                log.info(String.valueOf(ja.length()));
+                //log.info(String.valueOf(ja.length()));
 
                 // OK
                 if (ja.isEmpty()) {

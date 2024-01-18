@@ -14,30 +14,26 @@ spec:
     spec:
       containers:
         - image: tomaz12345/expenses
-        #- image: expenses
           name: expenses
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-              value: jdbc:postgresql://localhost:5432/expenses
+              valueFrom:
+                secretKeyRef:
+                  name: pg-conn
+                  key: connection
             - name: KUMULUZEE_DATASOURCES0_USERNAME
-              value: dbuser
+              valueFrom:
+                secretKeyRef:
+                  name: pg-user
+                  key: username
             - name: KUMULUZEE_DATASOURCES0_PASSWORD
-              value: postgres
-              #value: password
+              valueFrom:
+                secretKeyRef:
+                  name: pg-pass
+                  key: password
           ports:
             - containerPort: 8080
-              name: server
-        - image: postgres:13
-          name: pg-expenses
-          env:
-            - name: POSTGRES_DB
-              value: expenses
-            - name: POSTGRES_USER
-              value: dbuser
-            - name: POSTGRES_PASSWORD
-              value: postgres
-          ports:
-            - containerPort: 5432
+              protocol: TCP
               name: server
           livenessProbe:
             httpGet:
@@ -58,9 +54,9 @@ kind: Service
 metadata:
   name: expenses
 spec:
-  type: LoadBalancer
+  #type: ClusterIP
   ports:
-    - port: 8080
+    - port: 80
       protocol: TCP
       targetPort: server
   selector:
