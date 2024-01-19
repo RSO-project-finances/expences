@@ -52,6 +52,13 @@ spec:
                 port:
                   number: 8080
             pathType: Prefix
+          - path: "/graphiql"
+            backend:
+              service:
+                name: expenses
+                port:
+                  number: 8080
+            pathType: Prefix
           #- path: /
           #  backend:
           #    service:
