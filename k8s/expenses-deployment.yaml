@@ -13,7 +13,7 @@ spec:
         app: expenses
     spec:
       containers:
-        - image: tomaz12345/expenses:v1.2
+        - image: tomaz12345/expenses:v1.3
           name: expenses
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
