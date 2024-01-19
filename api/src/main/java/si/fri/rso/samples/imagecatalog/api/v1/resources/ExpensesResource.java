@@ -114,7 +114,7 @@ public class ExpensesResource {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://grammar-and-spellcheck.p.rapidapi.com/grammarandspellcheck"))
                     .header("content-type", "application/x-www-form-urlencoded")
-                    .header("X-RapidAPI-Key", "my-key")
+                    .header("X-RapidAPI-Key", "9124474929msh33f87c3c1527ffcp1b3bc2jsnc3117d7a449d")
                     .header("X-RapidAPI-Host", "grammar-and-spellcheck.p.rapidapi.com")
                     .method("POST",
                             HttpRequest.BodyPublishers.ofString("query=" + text))

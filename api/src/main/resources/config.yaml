@@ -4,14 +4,18 @@ kumuluzee:
     name: dev
   version: 1.0.0
   server:
-    base-url: http://localhost:8080
+    base-url: http://20.228.195.151:8080
     http:
       port: 8080
   datasources:
     - jndi-name: jdbc/ExpensesDS
-      connection-url: jdbc:postgresql://localhost:5432/expenses
-      username: dbuser
-      password: postgres
+      connection-url: jdbc:postgresql://ep-billowing-bush-70918901.us-east-2.aws.neon.tech/expenses
+      username: tomazpoljansek12
+      password: JEyrqgMh7cH1
+  dev:
+    scan-libraries:
+      - expenses-models
+      - expenses-services
   health:
     checks:
       #data-source-health-check:
@@ -31,8 +35,8 @@ kumuluzee:
                                     <Console name="console" target="SYSTEM_OUT">
                                         <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
                                     </Console>
-                                    <Socket name="logstash" host="host"
-                                    port="port" protocol="udp">
+                                    <Socket name="logstash" host="680856af-848e-4571-bd76-a8e839b8c97f-ls.logit.io"
+                                    port="20432" protocol="udp">
                                         <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
                                     </Socket>
                                 </Appenders>
@@ -40,7 +44,14 @@ kumuluzee:
                                     <!-- Default logger -->
                                     <Root level="all">
                                         <AppenderRef ref="console" level="info" />
-                                        <AppenderRef ref="logstash" level="debug" />
+                                        <AppenderRef ref="logstash" level="trace" />
                                     </Root>
                                 </Loggers>
                             </Configuration>'
+  openapi-mp:
+    ui:
+      specification-server: http://20.228.195.151:8080
+  #openapi:
+  #  enabled: true
+  #  ui:
+  #    enabled: true

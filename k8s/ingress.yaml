@@ -14,19 +14,55 @@ spec:
               service:
                 name: expenses
                 port:
-                  number: 80
+                  number: 8080
             pathType: Prefix
           - path: "/v1/statistics"
             backend:
               service:
                 name: statistics
                 port:
-                  number: 80
+                  number: 8081
+            pathType: Prefix
+          #- path: "/expenses/openapi"
+          - path: "/openapi"
+            backend:
+              service:
+                name: expenses
+                port:
+                  number: 8080
+            pathType: Prefix
+          - path: "/api-specs/ui"
+            backend:
+              service:
+                name: expenses
+                port:
+                  number: 8080
+            pathType: Prefix
+          - path: "/health"
+            backend:
+              service:
+                name: expenses
+                port:
+                  number: 8080
+            pathType: Prefix
+          - path: "/metrics"
+            backend:
+              service:
+                name: expenses
+                port:
+                  number: 8080
             pathType: Prefix
           #- path: /
           #  backend:
           #    service:
           #      name: expenses
+          #      port:
+          #        number: 80
+          #  pathType: Prefix
+          #- path: "/"
+          #  backend:
+          #    service:
+          #      name: aks-helloworld-one
           #      port:
           #        number: 80
           #  pathType: Prefix

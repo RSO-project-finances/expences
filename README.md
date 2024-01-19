@@ -4,8 +4,8 @@
 ```bash
 mvn clean package
 docker build -t expenses .   
-docker tag expenses tomaz12345/expenses
-docker push tomaz12345/expenses
+docker tag expenses tomaz12345/expenses:v1.2
+docker push tomaz12345/expenses:v1.2
 docker network ls  
 docker network rm rso
 docker network create rso
@@ -70,7 +70,7 @@ kubectl logs expenses-deployment----
 ```
 ```bash
 kubectl apply -f .\expences\k8s\expenses-deployment.yaml
-kubectl apply -f .\statistics\k8s\dep.yaml
+kubectl apply -f .\statistics\k8s\statistics-deployment.yaml
 kubectl apply -f .\expences\k8s\ingress.yaml
 ```
 ```bash
