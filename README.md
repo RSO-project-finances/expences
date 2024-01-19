@@ -71,7 +71,7 @@ kubectl logs expenses-deployment----
 ```bash
 kubectl apply -f .\expences\k8s\expenses-deployment.yaml
 kubectl apply -f .\statistics\k8s\statistics-deployment.yaml
-kubectl apply -f .\expences\k8s\ingress.yaml
+kubectl apply -f .\expences\k8s\ingress.yaml 
 ```
 ```bash
 kubectl delete --all deployments
